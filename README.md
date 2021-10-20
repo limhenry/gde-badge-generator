@@ -15,6 +15,8 @@
 
 :white_check_mark: Crop image to square or circle
 
+:white_check_mark: Drag and drop to upload image
+
 
 ## License
 
