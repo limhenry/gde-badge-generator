@@ -84,6 +84,26 @@
     box-shadow: 0 1px 5px 0 rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .12);
   }
 
+  .input-panel .advanced-input {
+    display: none;
+  }
+
+  .input-panel .advanced-button span::after {
+    content: 'Show Advanced Control';
+  }
+
+  .input-panel[advanced] .advanced-input {
+    display: flex;
+  }
+
+  .input-panel[advanced] .advanced-button svg {
+    transform: rotate(180deg);
+  }
+
+  .input-panel[advanced] .advanced-button span::after {
+    content: 'Hide Advanced Control';
+  }
+
   .input {
     margin-bottom: 36px;
     display: flex;
@@ -155,6 +175,20 @@
   .select-container .select[selected] {
     color: #fff;
     background-color: var(--button-color);
+  }
+
+  .advanced-button {
+    display: inline-flex;
+    color: var(--button-color);
+    font-weight: 700;
+    font-size: 14px;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 12px;
+  }
+
+  .advanced-button:hover {
+    color: #0e50bf;
   }
 
   .preview-panel {
@@ -262,6 +296,22 @@
         <div class="select" id="circle" onclick="changeShape('circle')">Circle</div>
       </div>
     </div>
+    <div class="input advanced-input">
+      <label for="xPos">Image X Position</label>
+      <input class="category-input" id="xPos" type="number" value="0" onkeyup="posChanged(event, 'x')">
+    </div>
+    <div class="input advanced-input">
+      <label for="yPos">Image Y Position</label>
+      <input class="category-input" id="yPos" type="number" value="0" onkeyup="posChanged(event, 'y')">
+    </div>
+    <div class="input advanced-input">
+      <label for="zoom">Image Zoom Level</label>
+      <input class="category-input" id="zoom" type="number" value="1" onkeyup="posChanged(event, 'zoom')">
+    </div>
+    <div class="advanced-button" onclick="toggleAdvancedControl()">
+      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor"><path d="M24 24H0V0h24v24z" fill="none" opacity=".87"/><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6-1.41-1.41z"/></svg>
+      <span></span>
+    </div>
   </div>
   <div class="preview-panel">
     <canvas></canvas>
@@ -280,6 +330,10 @@
   const ctx = canvas.getContext('2d')
   let image = ''
   let shape = 'original'
+  let isDragging = false
+  let imgX = 0
+  let imgY = 0
+  let zoom = 1
 
   const body = document.querySelector('body')
   body.addEventListener('dragenter', (e) => {
@@ -308,6 +362,17 @@
       uploadFile(e.dataTransfer.files[0])
     }
   }, false)
+
+  const posChanged = (e, type) => {
+    if (type === 'x') imgX = e.target.value
+    if (type === 'y') imgY = e.target.value
+    if (type === 'zoom') zoom = e.target.value
+    draw()
+  }
+
+  const toggleAdvancedControl = () => {
+    document.querySelector('.input-panel').toggleAttribute('advanced')
+  }
 
   const uploadImage = () => {
     document.querySelector('input.profile-input').click()
@@ -374,7 +439,11 @@
         case 'original': {
           canvas.width = image.width
           canvas.height = image.height
+          ctx.save()
+          ctx.translate(imgX * zoom, imgY * zoom)
+          ctx.scale(zoom, zoom)
           ctx.drawImage(image, 0, 0)
+          ctx.restore()
           break
         }
         default: {
@@ -386,7 +455,11 @@
           const ratio  = Math.max ( hRatio, vRatio )
           const x = ( canvas.width - image.width * ratio ) / 2
           const y = ( canvas.height - image.height * ratio ) / 2
+          ctx.save()
+          ctx.translate(imgX * zoom, imgY * zoom)
+          ctx.scale(zoom, zoom)
           ctx.drawImage(image, 0, 0, image.width, image.height, x, y, image.width * ratio, image.height * ratio)
+          ctx.restore()
           break
         }
       }
