@@ -6,5 +6,8 @@
 
 module.exports = {
   /* Your site config here */
+  siteMetadata: {
+    title: 'GDE Profile Badge Generator'
+  },
   plugins: [],
 }
