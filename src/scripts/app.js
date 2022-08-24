@@ -16,6 +16,7 @@ const settings = new Proxy({
   set: (target, property, value) => {
     target[property] = value;
     draw();
+    return true;
   },
 });
 
