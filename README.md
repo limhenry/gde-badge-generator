@@ -1,6 +1,6 @@
 # GDE Profile Badge Generator
 
-![](https://i.imgur.com/AfxZ5j6.png)
+![Screenshot of GDE Profile Badge Generator](https://i.imgur.com/wFifQC8.jpg)
 
 > Generate your GDE Profile Badge directly in your browser. No extra software required!
 
