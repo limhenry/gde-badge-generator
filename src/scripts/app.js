@@ -295,11 +295,18 @@ const loadBanner = () => {
 };
 
 const loadMaterial = () => {
+  document.querySelector('input#shape-material').disabled = false;
   settings.material = new Image();
   settings.material.src = require('../images/m3.svg');
   settings.material.onload = async () => {
     draw();
   };
+};
+
+const checkMaterialFlag = () => {
+  const params = new URLSearchParams(location.search);
+  const material = params.get('material');
+  if (material === 'true') loadMaterial();
 };
 
 rangeListener('x', 1);
@@ -313,4 +320,4 @@ resetButtonListener();
 downloadButtonListener();
 dropListener();
 loadBanner();
-loadMaterial();
+checkMaterialFlag();

@@ -145,6 +145,11 @@ main {
 
         input {
           display: none;
+
+          &:disabled,
+          &:disabled + label  {
+            display: none;
+          }
         }
 
         input:checked + label {
