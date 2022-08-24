@@ -11,11 +11,15 @@
 
 :white_check_mark: Generate the profile badge in full resolution
 
-:white_check_mark: Customizable category name
+:white_check_mark: Customizable category name (HTML's `<datalist>`)
 
-:white_check_mark: Crop image to square or circle
+:white_check_mark: Crop image to square, circle, or [Material 3 shape](https://gde-badge.limhenry.xyz/?material=true)
 
-:white_check_mark: Drag and drop to upload image
+:white_check_mark: Gridline for easier image composition
+
+:white_check_mark: Open image by drag and drop
+
+:blowfish: Open image from Clipboard (Async Clipboard API)
 
 
 ## License

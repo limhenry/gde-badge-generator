@@ -20,19 +20,16 @@ const settings = new Proxy({
   },
 });
 
-const loadImage = (name, file) => {
+const loadFile = (name, file) => {
   const reader = new FileReader();
-  reader.onload = (event) => {
-    const img = new Image();
-    img.onload = () => {
-      settings[name] = {
-        img,
-        fileName: file.name,
-      };
-    };
-    img.src = event.target.result;
-  };
+  reader.onload = (event) => loadImage(event.target.result, file.name, name);
   reader.readAsDataURL(file);
+};
+
+const loadImage = (src, fileName, name) => {
+  const img = new Image();
+  img.onload = () => settings[name] = {img, fileName};
+  img.src = src instanceof Blob ? URL.createObjectURL(src) : src;
 };
 
 const fileListener = (name) => {
@@ -41,12 +38,10 @@ const fileListener = (name) => {
   ele.addEventListener('change', (e) => {
     if (e && e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      loadImage(name, file);
+      loadFile(name, file);
     }
   });
-  btn.addEventListener('click', () => {
-    ele.click();
-  });
+  btn.addEventListener('click', () => ele.click());
 };
 
 const textListener = (name) => {
@@ -137,9 +132,22 @@ const dropListener = () => {
     drop.removeAttribute('active');
     if (e && e.dataTransfer.files && e.dataTransfer.files[0]) {
       const file = e.dataTransfer.files[0];
-      loadImage('image', file);
+      loadFile('image', file);
     }
   }, false);
+};
+
+const pasteListener = () => {
+  document.addEventListener('paste', async (e) => {
+    e.preventDefault();
+    const clipboardItems = await navigator.clipboard.read();
+    for (const clipboardItem of clipboardItems) {
+      for (const type of clipboardItem.types) {
+        const blob = await clipboardItem.getType(type);
+        if (type.startsWith('image/')) loadImage(blob, '', 'image');
+      }
+    }
+  });
 };
 
 const drawGrid = (canvas, ctx) => {
@@ -179,7 +187,6 @@ const draw = () => {
   const ctx = canvas.getContext('2d');
 
   const {image: imageObj, x, y, z, shape, grid, category, banner} = settings;
-
   const image = imageObj.img;
 
   if (image) {
@@ -319,5 +326,6 @@ fileListener('image');
 resetButtonListener();
 downloadButtonListener();
 dropListener();
+pasteListener();
 loadBanner();
 checkMaterialFlag();
