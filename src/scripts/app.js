@@ -20,6 +20,35 @@ const settings = new Proxy({
   },
 });
 
+const loadCategories = () => {
+  const categories = [
+    'Android',
+    'Angular',
+    'Assistant',
+    'Dart',
+    'Earth Engine',
+    'Firebase',
+    'Flutter',
+    'Google Workspace',
+    'Google Workspace Product',
+    'Go',
+    'Google Cloud Platform',
+    'Google Maps Platform',
+    'Internet of Things',
+    'Kotlin',
+    'Machine Learning',
+    'Payments',
+    'Web',
+  ];
+  const fragment = document.createDocumentFragment();
+  categories.forEach((e) => {
+    const opt = document.createElement('option');
+    opt.value = e;
+    fragment.appendChild(opt);
+  });
+  document.querySelector('datalist#categories').appendChild(fragment);
+};
+
 const loadFile = (name, file) => {
   const reader = new FileReader();
   reader.onload = (event) => loadImage(event.target.result, file.name, name);
@@ -316,6 +345,7 @@ const checkMaterialFlag = () => {
   if (material === 'true') loadMaterial();
 };
 
+loadCategories();
 rangeListener('x', 1);
 rangeListener('y', 1);
 rangeListener('z', 2);
