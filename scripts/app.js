@@ -319,19 +319,19 @@ const draw = () => {
   }
 };
 
-const loadBanner = () => {
+const loadBanner = async () => {
   settings.banner = new Image();
-  settings.banner.src = require('../images/banner.png');
+  settings.banner.src = (await import('../images/banner.png')).default;
   settings.banner.onload = async () => {
     await document.fonts.ready;
     draw();
   };
 };
 
-const loadMaterial = () => {
+const loadMaterial = async () => {
   document.querySelector('input#shape-material').disabled = false;
   settings.material = new Image();
-  settings.material.src = require('../images/m3.svg');
+  settings.material.src = (await import('../images/m3.svg')).default;
   settings.material.onload = async () => {
     draw();
   };
