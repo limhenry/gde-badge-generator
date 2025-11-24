@@ -24,6 +24,7 @@ const loadCategories = () => {
   const categories = [
     'Android',
     'Angular',
+    'AI',
     'Assistant',
     'Dart',
     'Earth Engine',
@@ -36,7 +37,6 @@ const loadCategories = () => {
     'Google Maps Platform',
     'Internet of Things',
     'Kotlin',
-    'Machine Learning',
     'Payments',
     'Web',
   ];
