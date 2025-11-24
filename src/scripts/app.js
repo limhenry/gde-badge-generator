@@ -22,23 +22,21 @@ const settings = new Proxy({
 
 const loadCategories = () => {
   const categories = [
+    'AI',
     'Android',
     'Angular',
-    'AI',
-    'Assistant',
     'Dart',
     'Earth Engine',
     'Firebase',
     'Flutter',
-    'Google Workspace',
-    'Google Workspace Product',
+    'Google Cloud',
     'Go',
-    'Google Cloud Platform',
+    'Identity',
+    'Kaggle',
     'Google Maps Platform',
-    'Internet of Things',
-    'Kotlin',
     'Payments',
-    'Web',
+    'Web Technologies',
+    'Google Workspace',
   ];
   const fragment = document.createDocumentFragment();
   categories.forEach((e) => {
