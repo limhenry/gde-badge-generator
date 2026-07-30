@@ -31,19 +31,30 @@
       <aside>
         <div class="form">
           <div class="input">
-            <label>Profile Picture</label>
+            <label for="image">Profile Picture</label>
             <div class="file">
               <input id="image" type="file">
               <button type="button">Open Image</button>
             </div>
           </div>
           <div class="input">
-            <label>Category Name</label>
-            <input id="category" list="categories" type="text" placeholder="Category Name">
-            <datalist id="categories"></datalist>
+            <label for="category">Category Name</label>
+            <select id="category">
+              <option value="gdev">Default</option>
+              <option value="ai">✨ AI</option>
+              <option value="android">🤖 Android</option>
+              <option value="angular">🅰️ Angular</option>
+              <option value="appsheet">📊 AppSheet</option>
+              <option value="cloud">☁️ Cloud</option>
+              <option value="firebase">🔥 Firebase</option>
+              <option value="flutter">🐦 Flutter</option>
+              <option value="go">🏃 Go</option>
+              <option value="web">🦖 Web</option>
+              <option value="workspace">📄 Workspace</option>
+            </select>
           </div>
-          <div class="input">
-            <label>Image Shape</label>
+          <div class="input" role="radiogroup" aria-labelledby="shape-label">
+            <span id="shape-label" class="label">Image Shape</span>
             <div class="radio">
               <input name="shape" id="shape-original" value="original" type="radio" checked></input>
               <label for="shape-original">Original</label>
@@ -55,8 +66,8 @@
               <label for="shape-material">Material</label>
             </div>
           </div>
-          <div class="input">
-            <label>Grid</label>
+          <div class="input" role="radiogroup" aria-labelledby="grid-label">
+            <span id="grid-label" class="label">Grid</span>
             <div class="radio">
               <input name="grid" id="grid-none" value="none" type="radio" checked></input>
               <label for="grid-none">None</label>
@@ -65,7 +76,7 @@
             </div>
           </div>
           <div class="input">
-            <label>Image X Position</label>
+            <label for="image-x">Image X Position</label>
             <div class="range">
               <input id="image-x" type="range" min="-100" max="100" value="0" step="0.1">
               <div>
@@ -75,7 +86,7 @@
             </div>
           </div>
           <div class="input">
-            <label>Image Y Position</label>
+            <label for="image-y">Image Y Position</label>
             <div class="range">
               <input id="image-y" type="range" min="-100" max="100" value="0" step="0.1">
               <div>
@@ -85,7 +96,7 @@
             </div>
           </div>
           <div class="input">
-            <label>Image Zoom Level</label>
+            <label for="image-z">Image Zoom Level</label>
             <div class="range">
               <input id="image-z" type="range" min="1" max="5" value="1" step="0.01">
               <div>
@@ -100,7 +111,7 @@
         </div>
         <footer>
           <div>Made by <a 
-            href="https://twitter.com/henrylim96"
+            href="https://bsky.app/profile/henrylim96.bsky.social"
             target="_blank"
           >@henrylim96</a>.</div>
           <div>View source code on <a
