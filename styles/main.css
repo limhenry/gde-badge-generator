@@ -84,7 +84,7 @@ main {
       grid-gap: 0.4em;
       justify-items: flex-start;
 
-      & > label {
+      & > .label {
         font-size: 0.9em;
       }
 
@@ -102,7 +102,8 @@ main {
         font-family: 'Google Sans', sans-serif;
       }
 
-      input[type="text"] {
+      input[type="text"],
+      select {
         height: 40px;
         border-radius: 1em;
         width: 100%;

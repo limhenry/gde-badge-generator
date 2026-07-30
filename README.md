@@ -1,6 +1,6 @@
 # GDE Profile Badge Generator
 
-![Screenshot of GDE Profile Badge Generator](https://i.imgur.com/wFifQC8.jpg)
+![Screenshot of GDE Profile Badge Generator](https://i.imgur.com/CsMOwgQ.jpeg)
 
 > Generate your GDE Profile Badge directly in your browser. No extra software required!
 
@@ -10,8 +10,6 @@
 :white_check_mark: No need to install Photoshop!
 
 :white_check_mark: Generate the profile badge in full resolution
-
-:white_check_mark: Customizable category name (HTML's `<datalist>`)
 
 :white_check_mark: Crop image to square, circle, or [Material 3 shape](https://gde-badge.limhenry.xyz/?material=true)
 
