@@ -195,6 +195,17 @@ main {
         margin: auto;
         max-width: 100%;
         max-height: 100%;
+        cursor: grab;
+        touch-action: none;
+        user-select: none;
+
+        &:active {
+          cursor: grabbing;
+        }
+      }
+
+      &.dragging canvas {
+        cursor: grabbing;
       }
 
       &[data-shape="circle"] canvas {

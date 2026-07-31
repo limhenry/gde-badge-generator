@@ -216,7 +216,7 @@ const draw = () => {
         ctx.save();
         ctx.translate(
           (((canvas.width - image.width * z) / 2) * x) / 100,
-          (((canvas.width - image.width * z) / 2) * y) / 100,
+          (((canvas.height - image.height * z) / 2) * y) / 100,
         );
         ctx.transform(
           z,
@@ -349,6 +349,84 @@ const checkMaterialFlag = () => {
   if (material === "true") loadMaterial();
 };
 
+const panListener = () => {
+  const canvas = document.querySelector("canvas");
+  const container = document.querySelector(".canvas");
+  let isDragging = false;
+  let startX = 0;
+  let startY = 0;
+  let initialX = 0;
+  let initialY = 0;
+
+  canvas.addEventListener("pointerdown", (e) => {
+    if (!settings.image.img) return;
+    isDragging = true;
+    startX = e.clientX;
+    startY = e.clientY;
+    initialX = parseFloat(settings.x) || 0;
+    initialY = parseFloat(settings.y) || 0;
+    canvas.setPointerCapture(e.pointerId);
+    container.classList.add("dragging");
+  });
+
+  canvas.addEventListener("pointermove", (e) => {
+    if (!isDragging || !settings.image.img) return;
+    const rect = canvas.getBoundingClientRect();
+    if (!rect.width || !rect.height) return;
+
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    const canvasDx = (e.clientX - startX) * scaleX;
+    const canvasDy = (e.clientY - startY) * scaleY;
+
+    const img = settings.image.img;
+    const z = settings.z;
+    let factorX = (canvas.width - img.width * z) / 2;
+    let factorY = (canvas.height - img.height * z) / 2;
+
+    if (Math.abs(factorX) < 1) factorX = canvas.width / 2;
+    if (Math.abs(factorY) < 1) factorY = canvas.height / 2;
+
+    let newX = initialX + (canvasDx / factorX) * 100;
+    let newY = initialY + (canvasDy / factorY) * 100;
+
+    newX = Math.max(-100, Math.min(100, newX));
+    newY = Math.max(-100, Math.min(100, newY));
+
+    updateRange("x", newX, 1);
+    updateRange("y", newY, 1);
+  });
+
+  const stopDragging = (e) => {
+    if (isDragging) {
+      isDragging = false;
+      try {
+        canvas.releasePointerCapture(e.pointerId);
+      } catch (_) {
+        // Pointer might already be released
+      }
+      container.classList.remove("dragging");
+    }
+  };
+
+  canvas.addEventListener("pointerup", stopDragging);
+  canvas.addEventListener("pointercancel", stopDragging);
+
+  canvas.addEventListener(
+    "wheel",
+    (e) => {
+      if (!settings.image.img) return;
+      e.preventDefault();
+      const zoomStep = e.deltaY < 0 ? 0.05 : -0.05;
+      const currentZ = parseFloat(settings.z) || 1;
+      let newZ = currentZ + zoomStep;
+      newZ = Math.max(1, Math.min(5, newZ));
+      updateRange("z", newZ, 2);
+    },
+    { passive: false },
+  );
+};
+
 rangeListener("x", 1);
 rangeListener("y", 1);
 rangeListener("z", 2);
@@ -360,5 +438,7 @@ resetButtonListener();
 downloadButtonListener();
 dropListener();
 pasteListener();
+panListener();
 loadBanner("gdev");
 checkMaterialFlag();
+

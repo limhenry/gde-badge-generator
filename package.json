@@ -1,6 +1,6 @@
 {
   "name": "gde-badge-generator",
-  "version": "3.0.0",
+  "version": "2.0.0",
   "description": "![](https://i.imgur.com/AfxZ5j6.png)",
   "devDependencies": {
     "eslint": "^8.57.1",
